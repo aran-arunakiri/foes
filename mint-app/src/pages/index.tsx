@@ -10,34 +10,34 @@ import {
 import { Hero } from "../components/Hero";
 import { Container } from "../components/Container";
 import { Main } from "../components/Main";
-import { GetStaticProps } from "next";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const Index = ({ tokens }: { tokens: any }) => {
+const Index = () => {
+  const [page, setPage] = useState(0);
+  const [tokens, setTokens] = useState([]);
+  useEffect(() => {
+    const loadTokens = async() => {
+      const res = await fetch(`/api/tokens/${page}`);
+      const data = await res.json();
+      setTokens(data.tokens);
+    }
+    loadTokens()
+  }, [page])
   return (
     <Container height="100vh">
       <Hero title={"Foes."} />
       <Main>
         <SimpleGrid columns={8}>
+          { page > 0 && <Code cursor="pointer" textAlign="center" m="2" p="2" onClick={() => {setPage(page - 1)}}>Prev &lt;</Code> }
           {tokens.map((token) => (
-            <Code textAlign="center" m="2" p="2">{token.token_id}</Code>
+            <Code key={token.token_id} textAlign="center" m="2" p="2">{token.token_id}</Code>
           ))}
-          <Code cursor="pointer" textAlign="center" m="2" p="2">Next >></Code>
+          { tokens.length == 100 && <Code cursor="pointer" textAlign="center" m="2" p="2" onClick={() => {setPage(page + 1)}}>Next &gt;</Code> }
         </SimpleGrid>
       </Main>
     </Container>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${process.env.BASE_URL}api/tokens`);
-  const tokens = await res.json();
-
-  return {
-    props: {
-      ...tokens,
-    },
-    revalidate: 60,
-  };
 };
 
 export default Index;
