@@ -15,8 +15,11 @@ export const Hero = ({ title }: { title: string }) => {
 
   const diff = ~~totalSupply - ~~initialTotalSupply
   useEffect(() => {
-    setInitialTotalSupply(totalSupply)
-  }, [])
+    if (!initialTotalSupply) {
+      setInitialTotalSupply(totalSupply)
+    }
+  }, [totalSupply])
+
   return (
   <Flex
     justifyContent="center"
@@ -30,7 +33,7 @@ export const Hero = ({ title }: { title: string }) => {
       <Text>out of 20000.</Text>
     </Flex>
     {
-      diff > 0 && <Flex>{diff} minted since you loaded.</Flex>
+      diff > 0 && diff != ~~initialTotalSupply && <Flex>{diff} minted since you loaded.</Flex>
     }
     {/* <Flex>
       <Text>
