@@ -20,7 +20,7 @@ const Index = () => {
     const loadTokens = async() => {
       const res = await fetch(`/api/tokens/${page}`);
       const data = await res.json();
-      setTokens(data.tokens);
+      setTokens(data.tokens || []);
     }
     loadTokens()
   }, [page])
