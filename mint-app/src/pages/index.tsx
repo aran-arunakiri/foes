@@ -20,15 +20,15 @@ const Index = () => {
     const loadTokens = async() => {
       const res = await fetch(`/api/tokens/${page}`);
       const data = await res.json();
-      setTokens(data.tokens);
+      setTokens(data.tokens || []);
     }
     loadTokens()
   }, [page])
   return (
-    <Container height="100vh">
+    <Container height="100vh" position="relative">
       <Hero title={"Foes."} />
-      <Main>
-        <SimpleGrid columns={8}>
+      <Main position="absolute">
+        <SimpleGrid columns={[4,4,6,8]} opacity="0.5">
           { page > 0 && <Code cursor="pointer" textAlign="center" m="2" p="2" onClick={() => {setPage(page - 1)}}>Prev &lt;</Code> }
           {tokens.map((token) => (
             <Code key={token.token_id} textAlign="center" m="2" p="2">{token.token_id}</Code>
