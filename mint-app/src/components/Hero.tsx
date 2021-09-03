@@ -26,7 +26,7 @@ export const Hero = ({ title }: { title: string }) => {
       <Text>out of 20000.</Text>
     </Flex>
     {
-      totalSupply && (initialTotalSupply != totalSupply) && <Flex>New {+totalSupply - +initialTotalSupply} minted since you loaded.</Flex>
+      totalSupply && (initialTotalSupply != totalSupply) && <Flex>{+totalSupply - +initialTotalSupply} minted since you loaded.</Flex>
     }
     {/* <Flex>
       <Text>
