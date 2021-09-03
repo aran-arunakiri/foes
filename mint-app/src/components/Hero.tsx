@@ -10,6 +10,8 @@ export const Hero = ({ title }: { title: string }) => {
   const [initialTotalSupply, setInitialTotalSupply] = useState('');
   const totalSupplyHook = useTotalSupply()
   const totalSupply = totalSupplyHook && totalSupplyHook.toString()
+  console.log("TOTAL SUPPLY", totalSupply)
+  console.log("initialTotalSupply", initialTotalSupply)
   useEffect(() => {
     setInitialTotalSupply(totalSupply)
   }, [])
@@ -26,7 +28,7 @@ export const Hero = ({ title }: { title: string }) => {
       <Text>out of 20000.</Text>
     </Flex>
     {
-      totalSupply && (initialTotalSupply != totalSupply) && <Flex>{+totalSupply - +initialTotalSupply} minted since you loaded.</Flex>
+      totalSupply && initialTotalSupply && (initialTotalSupply != totalSupply) && <Flex>{~~totalSupply - ~~initialTotalSupply} minted since you loaded.</Flex>
     }
     {/* <Flex>
       <Text>
