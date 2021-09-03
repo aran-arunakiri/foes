@@ -12,6 +12,8 @@ export const Hero = ({ title }: { title: string }) => {
   const totalSupply = totalSupplyHook && totalSupplyHook.toString()
   console.log("TOTAL SUPPLY", totalSupply)
   console.log("initialTotalSupply", initialTotalSupply)
+
+  const diff = ~~totalSupply - ~~initialTotalSupply
   useEffect(() => {
     setInitialTotalSupply(totalSupply)
   }, [])
@@ -28,7 +30,7 @@ export const Hero = ({ title }: { title: string }) => {
       <Text>out of 20000.</Text>
     </Flex>
     {
-      totalSupply && initialTotalSupply && (initialTotalSupply != totalSupply) && <Flex>{~~totalSupply - ~~initialTotalSupply} minted since you loaded.</Flex>
+      diff > 0 && <Flex>{diff} minted since you loaded.</Flex>
     }
     {/* <Flex>
       <Text>
